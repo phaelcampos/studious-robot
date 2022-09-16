@@ -8,19 +8,23 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createOrder = void 0;
-const dbConnection_1 = __importDefault(require("../database/dbConnection"));
-const createOrder = (order) => __awaiter(void 0, void 0, void 0, function* () {
-    const db = new dbConnection_1.default();
-    const con = yield db.getConnection();
-    yield con.connect();
-    const queryString = "INSERT INTO ProductOrder (product_id, provider_id, product_quantity) VALUES (?, ?, ?)";
-    const result = yield con.query(queryString, [order.product, order.provider, order.productQuantity]);
-    con.end();
+exports.getOrder = exports.getProvider = exports.createOrder = void 0;
+const createOrder = (order, con) => __awaiter(void 0, void 0, void 0, function* () {
+    const queryString = "INSERT INTO ProductOrder (order_id, product_id, product_quantity) VALUES (?, ?, ?)";
+    const result = yield con.query(queryString, [order.order_id, order.product_id, order.product_quantity]);
     return result;
 });
 exports.createOrder = createOrder;
+const getProvider = (provider_id, con) => __awaiter(void 0, void 0, void 0, function* () {
+    const queryString = "SELECT * FROM Provider where id = ?";
+    const result = yield con.query(queryString, [provider_id]);
+    return result[0];
+});
+exports.getProvider = getProvider;
+const getOrder = (order_id, con) => __awaiter(void 0, void 0, void 0, function* () {
+    const queryString = "SELECT * FROM ProductOrder where order_id = ?";
+    const result = yield con.query(queryString, [order_id]);
+    return result[0];
+});
+exports.getOrder = getOrder;

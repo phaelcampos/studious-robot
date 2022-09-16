@@ -5,15 +5,17 @@ import {BasicProvider, Provider} from "./IProvider";
 
 export interface BasicOrder {
     product: BasicProduct,
-    provider: BasicProvider,
-    productQuantity: number
+    product_quantity: number
 }
 
-export interface Order extends BasicOrder {
-    orderId: number
+export interface Order {
+    provider_id: BasicProvider
+    order_id: string
+    products: BasicOrder[]
 }
 
-export interface OrderWithDetails extends Order{
-    product: Product,
-    provider: Provider,
+export interface uniqueItemOrder {
+    order_id: string
+    product_id: BasicProduct,
+    product_quantity: number
 }

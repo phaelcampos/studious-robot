@@ -8,7 +8,6 @@ export default class FirstProvider {
             provider + "/carts",
             payload
         );
-        console.log(result)
         return result.status
     }
 
@@ -29,7 +28,6 @@ export default class FirstProvider {
     }
 
     async getProduct(id: string, provider: string) {
-        console.log(provider + "/products/"+id)
         const result = await axios.get(
             provider + "/products/"+id
         );
